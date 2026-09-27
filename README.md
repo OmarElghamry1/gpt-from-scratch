@@ -1,6 +1,10 @@
 # GPT from Scratch
 
-A character-level GPT trained on Tiny Shakespeare, built step by step following Andrej Karpathy's "Let's build GPT": bigram → self-attention → multi-head attention → feed-forward → residual blocks → LayerNorm → dropout.
+My own implementation of Andrej Karpathy's video [Let's build GPT: from scratch, in code, spelled out](https://www.youtube.com/watch?v=kCc8FmEb1nY).
+
+It's a character-level GPT trained on Tiny Shakespeare that learns to generate Shakespeare-like text. I built it one piece at a time and tracked the loss after each step.
+
+A transformer turns each token into an embedding, then uses self-attention so every token can look at the tokens before it and pick up context. Stacked blocks of attention and feed-forward layers refine that context until the model predicts the next token.
 
 ## Files
 
@@ -13,12 +17,14 @@ A character-level GPT trained on Tiny Shakespeare, built step by step following 
 
 ## Run
 
+Uses [uv](https://docs.astral.sh/uv/):
+
 ```bash
-pip install torch matplotlib
-python gpt.py
+uv sync
+uv run gpt.py
 ```
 
-`matplotlib` is only needed for the notebooks.
+For the notebooks, select the `.venv` kernel in your editor.
 
 ## Results
 
@@ -33,3 +39,20 @@ python gpt.py
 | LayerNorm (pre-norm) | 5000 / 1e-3 | 2.0717 | 2.1273 | 1.9677 | 2.0710 |
 | LayerNorm (post-norm) | 5000 / 1e-3 | 2.0782 | 2.1310 | 1.9742 | 2.0708 |
 | Dropout 10% | 5000 / 1e-3 | 2.1308 | 2.1718 | 2.0522 | 2.1238 |
+
+## GPT Config
+
+![GPT config parameters compared with GPT-2 Small](images/gpt_config_table.png)
+
+## Lessons Learned
+
+- `nn.Embedding` is nothing more than a lookup table: each token gets a vector so it has a semantic meaning the computer can work with.
+- Tokens are not just words; they can be characters, subwords or whole words, depending on the vocab size.
+- Vocab size decides how byte pair encoding splits text. Small vocab forces single characters (`u`, `n`, `b`...), medium gives subwords (`un`, `bel`, `iev`...), and a big vocab can keep `unbelievable` as one token.
+- BPE tries to represent the whole text with as few tokens as possible. With a large vocab it can get lazy and make each word a token; with a small one it has to find the most repeating patterns.
+- Token length is how many characters a token holds; sequence length is how many tokens the whole input takes.
+- As vocab size increases, sequence length decreases, and the opposite is also true. It is a trade off.
+- `block_size` is how many tokens the model can see at once (its context). Fewer tokens per sentence means you don't reach `block_size` easily. Think of garbage bags: the bigger the bag, the more you collect at once.
+- The chain: vocab size → token length → sequence length ≤ block size. Embedding dimension (`n_embd`) is separate and controls representation capacity.
+- Token embeddings alone are not enough because they are static and context free: the same word has the same embedding no matter where it is in the sentence.
+- Positional embeddings (`nn.Embedding(block_size, n_embd)`) are learned per position, not per token, only up to `block_size`, and get added to the token embeddings in the same dimension space.
