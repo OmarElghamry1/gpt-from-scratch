@@ -1,0 +1,62 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red251\green0\blue7;}
+{\*\expandedcolortbl;;\cssrgb\c100000\c12195\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww16020\viewh12280\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs36 \cf2 Number of Iterations: 3000, learning_rate: 1e-2
+\fs24 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs36 \cf0 Before head\
+step 2700: train loss 2.5040, val loss 2.5114\
+\
+\
+After one_head\
+step 2700: train loss 2.4033, val loss 2.4352\
+\
+After Multi-head. \
+step 2700: train loss 2.2168, val loss 2.2792\
+\
+After Feed Forward Neural Network.\
+step 2700: train loss 2.1564, val loss 2.2431\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf2 Number of Iterations: 5,000 learning_rate: 1e-3\cf0 \
+\
+Added 4 Blocks with Residual Network, without projection. \
+step 2700: train loss 2.1103, val loss 2.1615. \
+tstep 4800: train loss 2.0196, val loss 2.0901\
+\
+\
+4 Blocks with Projection. \
+step 2700: train loss 2.0907, val loss 2.1384\
+step 4800: train loss 1.9718, val loss 2.0651\
+\
+\
+\
+Layer Normalization. PreNorm. \
+step 2700: train loss 2.0717, val loss 2.1273\
+step 4800: train loss 1.9677, val loss 2.0710\
+\
+\
+Layer Normalization. PostNorm. \
+step 2700: train loss 2.0782, val loss 2.1310\
+step 4800: train loss 1.9742, val loss 2.0708\
+\
+\
+\
+Dropout: 10%\
+step 2700: train loss 2.1308, val loss 2.1718\
+step 4800: train loss 2.0522, val loss 2.1238\
+\
+\
+}
