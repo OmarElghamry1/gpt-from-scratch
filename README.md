@@ -28,6 +28,12 @@ For the notebooks, select the `.venv` kernel in your editor.
 
 ## Results
 
+Loss is the average negative log-likelihood per character (cross-entropy), so lower is better; training minimizes it, which is maximum likelihood.
+
+```
+loss = -log p(correct next char)
+```
+
 | Stage | Iters / LR | Train @2700 | Val @2700 | Train @4800 | Val @4800 |
 |---|---|---|---|---|---|
 | Bigram (no attention) | 3000 / 1e-2 | 2.5040 | 2.5114 | – | – |
@@ -39,6 +45,8 @@ For the notebooks, select the `.venv` kernel in your editor.
 | LayerNorm (pre-norm) | 5000 / 1e-3 | 2.0717 | 2.1273 | 1.9677 | 2.0710 |
 | LayerNorm (post-norm) | 5000 / 1e-3 | 2.0782 | 2.1310 | 1.9742 | 2.0708 |
 | Dropout 10% | 5000 / 1e-3 | 2.1308 | 2.1718 | 2.0522 | 2.1238 |
+
+The baseline is random guessing over the 65 characters: each gets p = 1/65 ≈ 1.5%, so loss = ln(65) ≈ 4.17. The best result we found is **4 residual blocks with projection**, with val loss 2.0651 at step 4800. That means the model gives the correct next character about e^-2.0651 ≈ 12.7% probability on average, roughly 8x better than random.
 
 ## GPT Config
 
